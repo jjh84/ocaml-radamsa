@@ -1,12 +1,18 @@
 # OCaml bindings to radamsa
 
-OCaml radamsa is a project to provide [radamsa](https://gitlab.com/akihe/radamsa) binding for the OCaml language.
+OCaml radamsa is a project to provide OCaml binding for [radamsa](https://gitlab.com/akihe/radamsa).
 
 ## Installation
 
-You can use `opam install radamsa` to install ocaml-radamsa.
+Use [opam](https://opam.ocaml.org/) to install `radamsa` package. This will automatically compile & install `libradamsa` in sandboxed environment.
+
+```
+opam install radamsa
+```
 
 ## Example
+
+`utop` example
 
 ```
 utop # #require "radamsa";;
