@@ -5,6 +5,8 @@
 #include <inttypes.h>
 #include <stddef.h>
 #include <string.h>
+#include <fcntl.h>
+#include <unistd.h>
 
 #include <caml/mlvalues.h>
 #include <caml/alloc.h>
@@ -17,14 +19,14 @@
 
 #include "stubs.h"
 
-void init();
+void radamsa_init();
 size_t radamsa(uint8_t *ptr, size_t len, uint8_t *target, size_t max, unsigned int seed);
 
 static uint8_t *gbuf = NULL;
 
 value caml__init(value unit) {
     CAMLparam1(unit);
-    init();
+    radamsa_init();
     gbuf = malloc(1024*1024);
     CAMLreturn (Val_unit);
 }
@@ -36,6 +38,7 @@ value caml__radamsa2(value input, value seed)
 
     int input_length = caml_string_length(input);
     unsigned int iseed = Int_val(seed);
+    radamsa_init();
     size_t res = radamsa(Bytes_val(input), input_length, gbuf, 1024*1024, iseed);
     result = caml_alloc_string(res);
     memcpy(Bytes_val(result), gbuf, res);
@@ -47,9 +50,11 @@ value caml__radamsa(value input)
 {
     CAMLparam1 (input);
     CAMLlocal1 (result);
-
+    int seed, fd = open("/dev/urandom", O_RDONLY, 0);
+    read(fd, &seed, sizeof(seed));
+    close(fd);
     int input_length = caml_string_length(input);
-    size_t res = radamsa(Bytes_val(input), input_length, gbuf, 1024*1024, 0);
+    size_t res = radamsa(Bytes_val(input), input_length, gbuf, 1024*1024, seed);
     result = caml_alloc_string(res);
     memcpy(Bytes_val(result), gbuf, res);
 
