@@ -1,1 +1,2 @@
-val init : unit -> unit
+val radamsa : string -> string
+val radamsa2 : string -> int -> string

@@ -1,32 +1,21 @@
-# libradamsa
-Precompiled radamsa library
+# OCaml bindings to radamsa
 
-> Original repository: https://gitlab.com/akihe/radamsa
+OCaml radamsa is a project to provide [radamsa](https://gitlab.com/akihe/radamsa) binding for the OCaml language.
 
-> Source commit: 7b2cc2d0
+## Installation
 
-> The code here is adapted for AFL++ with minor changes respect the original version
+You can use `opam install radamsa` to install ocaml-radamsa.
 
-## License
+## Example
 
 ```
-Copyright (c) 2013 Aki Helin
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
+utop # #require "radamsa";;
+utop # Radamsa.radamsa "AAAA";;
+- : string = "ó °AAAAAA"
+utop # Radamsa.radamsa "AAAA";;
+- : string = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+utop # Radamsa.radamsa "AAAA";;
+- : string = "AAAA AA"
+utop # Radamsa.radamsa "AAAA";;
+- : string = "ABAʳABAʳABAÊAʳA"
 ```

@@ -4,6 +4,7 @@
 
 #include <inttypes.h>
 #include <stddef.h>
+#include <string.h>
 
 #include <caml/mlvalues.h>
 #include <caml/alloc.h>
@@ -19,7 +20,38 @@
 void init();
 size_t radamsa(uint8_t *ptr, size_t len, uint8_t *target, size_t max, unsigned int seed);
 
+static uint8_t *gbuf = NULL;
+
 value caml__init(value unit) {
-    (void) unit;
-    return Val_unit;
+    CAMLparam1(unit);
+    init();
+    gbuf = malloc(1024*1024);
+    CAMLreturn (Val_unit);
+}
+
+value caml__radamsa2(value input, value seed)
+{
+    CAMLparam2 (input, seed);
+    CAMLlocal1 (result);
+
+    int input_length = caml_string_length(input);
+    unsigned int iseed = Int_val(seed);
+    size_t res = radamsa(Bytes_val(input), input_length, gbuf, 1024*1024, iseed);
+    result = caml_alloc_string(res);
+    memcpy(Bytes_val(result), gbuf, res);
+
+    CAMLreturn(result);
+}
+
+value caml__radamsa(value input)
+{
+    CAMLparam1 (input);
+    CAMLlocal1 (result);
+
+    int input_length = caml_string_length(input);
+    size_t res = radamsa(Bytes_val(input), input_length, gbuf, 1024*1024, 0);
+    result = caml_alloc_string(res);
+    memcpy(Bytes_val(result), gbuf, res);
+
+    CAMLreturn(result);
 }
