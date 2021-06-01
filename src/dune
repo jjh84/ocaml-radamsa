@@ -1,0 +1,4 @@
+(library (name radamsa) (public_name radamsa)
+  (foreign_stubs (language c) (names stubs))
+  (c_library_flags (-lradamsa))
+)
