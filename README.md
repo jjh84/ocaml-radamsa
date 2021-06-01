@@ -10,25 +10,12 @@ You can use `opam install radamsa` to install ocaml-radamsa.
 
 ```
 utop # #require "radamsa";;
-utop # Radamsa.radamsa "(1+1)+2";;
-- : string = "(1+0)+2"
-utop # Radamsa.radamsa "(1+1)+2";;
-- : string = "(1+1)+127028527159086051696090776"
-utop # Radamsa.radamsa "(1+1)+2";;
-- : string = "(170141183460469231731687303715884171264+1)+2"
-utop # Radamsa.radamsa "(1+1)+2";;
-- : string = "(1+1)+0"
-```
-
-You can pass `seed` via `radamsa2` API.
-
-```
-top # Radamsa.radamsa2 "(1+1)+2" 5;;
-- : string = "(1󠀪+1)+2"
-top # Radamsa.radamsa2 "(1+1)+2" 5;;
-- : string = "(1󠀪+1)+2"
-utop # Radamsa.radamsa2 "(1+1)+2" 8;;
-- : string = "(2147483649+1)+1"
-utop # Radamsa.radamsa2 "(1+1)+2" 8;;
-- : string = "(2147483649+1)+1"
+utop # Radamsa.radamsa "(1+2)*3";;
+- : string = "(1󠁈+1)*3"
+utop # Radamsa.radamsa "(1+2)*3";;
+- : string = "(1+18446744073709551616)*3"
+utop # Radamsa.radamsa ~seed:8 "(1+2)*3";;
+- : string = "(2147483649+2)*2"
+utop # Radamsa.radamsa ~seed:10 "(1+2)*3";;
+- : string = "(0+6135)*-1"
 ```
