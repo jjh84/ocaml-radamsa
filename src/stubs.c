@@ -22,12 +22,11 @@
 void radamsa_init();
 size_t radamsa(uint8_t *ptr, size_t len, uint8_t *target, size_t max, unsigned int seed);
 
-static uint8_t *gbuf = NULL;
+static uint8_t gbuf[1024*1024];
 
 value caml__init(value unit) {
     CAMLparam1(unit);
     radamsa_init();
-    gbuf = malloc(1024*1024);
     CAMLreturn (Val_unit);
 }
 
@@ -42,8 +41,7 @@ value caml__radamsa(value input, value seed)
     if(iseed) radamsa_init();
 
     size_t res = radamsa(Bytes_val(input), input_length, gbuf, 1024*1024, iseed);
-    result = caml_alloc_string(res);
-    memcpy(Bytes_val(result), gbuf, res);
+    result = caml_alloc_initialized_string(res, (const char *)gbuf);
 
-    CAMLreturn(result);
+    CAMLreturn (result);
 }
