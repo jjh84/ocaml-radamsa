@@ -6,7 +6,7 @@ homepage:     "https://github.com/jjh84/ocaml-radamsa"
 bug-reports:  "https://github.com/jjh84/ocaml-radamsa/issues"
 dev-repo:     "git+https://github.com/jjh84/ocaml-radamsa.git"
 license:      "MIT"
-version:      "0.1"
+version:      "0.2"
 
 build: [
   ["dune" "build" "-p" name "-j" jobs]
